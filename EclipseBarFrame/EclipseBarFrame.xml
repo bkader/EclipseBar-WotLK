@@ -1,0 +1,138 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+	<Script file="EclipseBarFrame.lua"/>
+	<Frame name="EclipseBarFrame" parent="PlayerFrame" frameStrata="LOW" toplevel="true" hidden="true">
+		<Animations>
+			<AnimationGroup name="$parentSunActivate">
+				<Alpha change="1" duration="0.6" order="1"/>
+				<Alpha change="1" duration="0.6" order="1"/>
+				<Scripts>
+					<OnPlay>
+						self:GetParent().darkSun:Hide();
+					</OnPlay>
+					<OnFinished>
+						self:GetParent().glow:Show();
+						self:GetParent().darkMoon:Show();
+						self:GetParent().glow.pulse:Play();
+					</OnFinished>
+				</Scripts>
+			</AnimationGroup>
+			<AnimationGroup name="$parentSunDeactivate">
+				<Alpha change="-1" duration="0.6" order="1"/>
+				<Alpha change="-1" duration="0.6" order="1"/>
+				<Scripts>
+					<OnPlay>
+						self:GetParent().glow.pulse:Stop();
+					</OnPlay>
+					<OnFinished>
+						self:GetParent().glow:Hide();
+						self:GetParent().darkMoon:Hide();
+					</OnFinished>
+				</Scripts>
+			</AnimationGroup>
+			<AnimationGroup name="$parentMoonActivate">
+				<Alpha change="1" duration="0.6" order="1"/>
+				<Alpha change="1" duration="0.6" order="1"/>
+				<Scripts>
+					<OnPlay>
+						self:GetParent().darkMoon:Hide();
+					</OnPlay>
+					<OnFinished>
+						self:GetParent().glow:Show();
+						self:GetParent().darkSun:Show();
+						self:GetParent().glow.pulse:Play();
+					</OnFinished>
+				</Scripts>
+			</AnimationGroup>
+			<AnimationGroup name="$parentMoonDeactivate">
+				<Alpha change="-1" duration="0.6" order="1"/>
+				<Alpha change="-1" duration="0.6" order="1"/>
+				<Scripts>
+					<OnPlay>
+						self:GetParent().glow.pulse:Stop();
+					</OnPlay>
+					<OnFinished>
+						self:GetParent().glow:Hide();
+						self:GetParent().darkSun:Hide();
+					</OnFinished>
+				</Scripts>
+			</AnimationGroup>
+		</Animations>
+		<Size x="140" y="38"/>
+		<Anchors>
+			<Anchor point="TOP" relativeTo="PlayerFrame" relativePoint="BOTTOM">
+				<Offset><AbsDimension x="48" y="40"/></Offset>
+			</Anchor>
+		</Anchors>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parentBar" file="Interface\AddOns\EclipseBarFrame\UI-DruidEclipse">
+					<Size x="140" y="38"/>
+					<Anchors>
+						<Anchor point="CENTER"/>
+					</Anchors>
+					<TexCoords left="0.00390625" right="0.55078125" top="0.63281250" bottom="0.92968750"/>
+				</Texture>
+			</Layer>
+			<Layer level="ARTWORK">
+				<Texture file="Interface\AddOns\EclipseBarFrame\UI-DruidEclipse" name="$parentSun">
+					<Size x="23" y="23"/>
+					<Anchors>
+						<Anchor point="CENTER" relativeTo="$parentBar"  relativePoint="RIGHT" x="-17" y="1"/>
+					</Anchors>
+					<TexCoords left="0.65625000" right="0.74609375" top="0.37500000" bottom="0.55468750"/>
+				</Texture>
+				<Texture file="Interface\AddOns\EclipseBarFrame\UI-DruidEclipse" name="$parentMoon">
+					<Size x="23" y="23"/>
+					<Anchors>
+						<Anchor point="CENTER" relativeTo="$parentBar" relativePoint="LEFT" x="17" y="1"/>
+					</Anchors>
+					<TexCoords left="0.55859375" right="0.64843750" top="0.57031250" bottom="0.75000000"/>
+				</Texture>
+				<Texture file="Interface\AddOns\EclipseBarFrame\UI-DruidEclipse" name="$parentDarkSun">
+					<Size x="23" y="23"/>
+					<Anchors>
+						<Anchor point="CENTER" relativeTo="$parentSun"/>
+					</Anchors>
+					<TexCoords left="0.55859375" right="0.64843750" top="0.76562500" bottom="0.94531250"/>
+				</Texture>
+				<Texture file="Interface\AddOns\EclipseBarFrame\UI-DruidEclipse" name="$parentDarkMoon">
+					<Size x="23" y="23"/>
+					<Anchors>
+						<Anchor point="CENTER" relativeTo="$parentMoon"/>
+					</Anchors>
+					<TexCoords left="0.55859375" right="0.64843750" top="0.37500000" bottom="0.55468750"/>
+				</Texture>
+			</Layer>
+			<Layer level="OVERLAY">
+				<Texture file="Interface\AddOns\EclipseBarFrame\UI-DruidEclipse" name="$parentMarker" alphaMode="ADD">
+					<Size x="20" y="20"/>
+					<Anchors>
+						<Anchor point="CENTER" y="2"/>
+					</Anchors>
+					<TexCoords left="1.0" right="0.914" top="0.82" bottom="1.0"/>
+				</Texture>
+				<Texture file="Interface\AddOns\EclipseBarFrame\UI-DruidEclipse" name="$parentGlow">
+					<Animations>
+						<AnimationGroup looping="REPEAT" name="$parentPulse">
+							<Scale scaleX="1.08" scaleY="1.08" duration="0.5" smoothing="IN_OUT" order="1"/>
+							<Scale scaleX="-0.9259" scaleY="-0.9259" duration="0.5" smoothing="IN_OUT" order="2"/>
+						</AnimationGroup>
+					</Animations>
+					<Size x="43" y="45"/>
+					<Anchors>
+						<Anchor point="CENTER"/>
+					</Anchors>
+					<TexCoords left="0.55859375" right="0.72656250" top="0.00781250" bottom="0.35937500"/>
+				</Texture>
+			</Layer>
+		</Layers>
+
+		<Scripts>
+			<OnLoad function="EclipseBar_OnLoad"/>
+			<OnShow function="EclipseBar_OnShow"/>
+			<OnEvent function="EclipseBar_OnEvent"/>
+			<OnUpdate function="EclipseBar_Update"/>
+		</Scripts>
+	</Frame>
+</Ui>
