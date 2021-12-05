@@ -3,7 +3,7 @@
 ## Notes: Druid EclipseBar for Wrath of the Lich King.
 ## DefaultState: enabled
 ## Author: Kader (|cff808080bkader#6361|r)
-## X-Date: 2021-12-05 @ 03:45 AM |cff808080UTC|r
+## X-Date: 2021-12-05 @ 04:33 AM |cff808080UTC|r
 ## X-Email: bkader@mail.com
 ## X-Website: https://github.com/bkader/Skada-WoTLK
 ## X-Discord: https://discord.gg/a8z5CyS3eW

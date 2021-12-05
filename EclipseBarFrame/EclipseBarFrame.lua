@@ -70,14 +70,16 @@ function EclipseBar_OnLoad(self)
 	local fname = self:GetName()
 
 	self.sun = _G[fname .. "Sun"]
+	self.sunBar = _G[fname .. "SunBar"]
 	self.darkSun = _G[fname .. "DarkSun"]
 	self.sunActivate = _G[fname .. "SunActivate"]
 	self.sunDeactivate = _G[fname .. "SunDeactivate"]
 
+	self.moon = _G[fname .. "Moon"]
+	self.moonBar = _G[fname .. "MoonBar"]
+	self.darkMoon = _G[fname .. "DarkMoon"]
 	self.moonActivate = _G[fname .. "MoonActivate"]
 	self.moonDeactivate = _G[fname .. "MoonDeactivate"]
-	self.darkMoon = _G[fname .. "DarkMoon"]
-	self.moon = _G[fname .. "Moon"]
 
 	self.glow = _G[fname .. "Glow"]
 	self.glow.pulse = _G[fname .. "GlowPulse"]
@@ -120,7 +122,9 @@ function EclipseBar_OnShow(self)
 		self.glow:SetWidth(glowInfo.x)
 		self.glow:SetHeight(glowInfo.y)
 		self.glow:SetTexCoord(glowInfo.left, glowInfo.right, glowInfo.top, glowInfo.bottom)
+		self.sunBar:Hide()
 		self.darkMoon:Hide()
+		self.moonBar:Show()
 		self.darkSun:Show()
 		self.glow:Show()
 		self.glow.pulse:Play()
@@ -131,14 +135,18 @@ function EclipseBar_OnShow(self)
 		self.glow:SetWidth(glowInfo.x)
 		self.glow:SetHeight(glowInfo.y)
 		self.glow:SetTexCoord(glowInfo.left, glowInfo.right, glowInfo.top, glowInfo.bottom)
-		self.darkSun:Hide()
+		self.sunBar:Show()
 		self.darkMoon:Show()
+		self.moonBar:Hide()
+		self.darkSun:Hide()
 		self.glow:Show()
 		self.glow.pulse:Play()
 		self.eclipseDuration = duration
 	else
-		self.darkSun:Hide()
+		self.sunBar:Hide()
 		self.darkMoon:Hide()
+		self.moonBar:Hide()
+		self.darkSun:Hide()
 		self.glow:SetPoint("CENTER", self, "CENTER", 0, 0)
 		self.glow:Hide()
 		self.eclipseDuration = 0
@@ -234,8 +242,17 @@ function EclipseBar_CheckBuffs(self)
 	self.hasSolarEclipse = hasSolarEclipse
 end
 
+local firstLoad = nil
 function EclipseBar_OnEvent(self, event, ...)
 	if event == "UNIT_AURA" then
+		-- upon login...
+		if not firstLoad then
+			playerSpec = GetSpecialization()
+			playerForm = GetShapeshiftForm()
+			EclipseBar_UpdateShown(self)
+			firstLoad = true
+		end
+
 		local arg1 = ...
 		if arg1 == PlayerFrame.unit then
 			EclipseBar_CheckBuffs(self)

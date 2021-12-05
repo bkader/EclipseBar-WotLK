@@ -8,9 +8,11 @@
 				<Alpha change="1" duration="0.6" order="1"/>
 				<Scripts>
 					<OnPlay>
+						self:GetParent().moonBar:Hide();
 						self:GetParent().darkSun:Hide();
 					</OnPlay>
 					<OnFinished>
+						self:GetParent().sunBar:Show();
 						self:GetParent().glow:Show();
 						self:GetParent().darkMoon:Show();
 						self:GetParent().glow.pulse:Play();
@@ -25,6 +27,7 @@
 						self:GetParent().glow.pulse:Stop();
 					</OnPlay>
 					<OnFinished>
+						self:GetParent().sunBar:Hide();
 						self:GetParent().glow:Hide();
 						self:GetParent().darkMoon:Hide();
 					</OnFinished>
@@ -35,9 +38,11 @@
 				<Alpha change="1" duration="0.6" order="1"/>
 				<Scripts>
 					<OnPlay>
+						self:GetParent().sunBar:Hide();
 						self:GetParent().darkMoon:Hide();
 					</OnPlay>
 					<OnFinished>
+						self:GetParent().moonBar:Show();
 						self:GetParent().glow:Show();
 						self:GetParent().darkSun:Show();
 						self:GetParent().glow.pulse:Play();
@@ -52,6 +57,7 @@
 						self:GetParent().glow.pulse:Stop();
 					</OnPlay>
 					<OnFinished>
+						self:GetParent().moonBar:Hide();
 						self:GetParent().glow:Hide();
 						self:GetParent().darkSun:Hide();
 					</OnFinished>
@@ -75,6 +81,20 @@
 				</Texture>
 			</Layer>
 			<Layer level="ARTWORK">
+				<Texture name="$parentSunBar" file="Interface\AddOns\EclipseBarFrame\UI-DruidEclipse" hidden="true">
+					<Size x="140" y="38"/>
+					<Anchors>
+						<Anchor point="CENTER"/>
+					</Anchors>
+					<TexCoords left="0.00390625" right="0.55078125" top="0.32031250" bottom="0.61718750"/>
+				</Texture>
+				<Texture name="$parentMoonBar" file="Interface\AddOns\EclipseBarFrame\UI-DruidEclipse" hidden="true">
+					<Size x="140" y="38"/>
+					<Anchors>
+						<Anchor point="CENTER"/>
+					</Anchors>
+					<TexCoords left="0.00390625" right="0.55078125" top="0.00781250" bottom="0.30468750"/>
+				</Texture>
 				<Texture file="Interface\AddOns\EclipseBarFrame\UI-DruidEclipse" name="$parentSun">
 					<Size x="23" y="23"/>
 					<Anchors>
