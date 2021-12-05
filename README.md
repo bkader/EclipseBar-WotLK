@@ -5,7 +5,7 @@
 Backported Druid EclipseBar but instead of showing power bar, the marker moves with the eclipse's remaining time.
 
 <p align="center">
-  <img alt="EclipseBar Preview" src="https://user-images.githubusercontent.com/4732702/144732427-448c5458-b683-4c09-9165-0b94d2332582.gif">
+  <img alt="EclipseBar Preview" src="https://user-images.githubusercontent.com/4732702/144733624-99d232fe-c53c-4158-89f5-e091a02adffa.gif">
 </p>
 
 ## How to install
