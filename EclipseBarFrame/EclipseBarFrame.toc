@@ -1,6 +1,6 @@
 ## Interface: 30300
 ## Title: Eclipse Bar
-## Notes: Cataclysm Eclipse Bar of WotLK.
+## Notes: Druid EclipseBar for Wrath of the Lich King.
 ## DefaultState: enabled
 ## Author: Kader (|cff808080bkader#6361|r)
 ## X-Date: 2021-12-05 @ 03:45 AM |cff808080UTC|r
