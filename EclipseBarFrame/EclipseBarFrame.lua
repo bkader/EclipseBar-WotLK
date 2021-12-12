@@ -21,7 +21,7 @@ ECLIPSE_MARKER_COORDS["moon"] = {0.914, 1.0, 0.641, 0.82}
 
 local playerName = UnitName("player")
 local playerClass = select(2, UnitClass("player"))
-local playerSpec, playerForm
+local moonkinForm
 
 local function GetSpecialization(isInspect, isPet, specGroup)
 	local currentSpecGroup = GetActiveTalentGroup(isInspect, isPet) or (specGroup or 1)
@@ -42,12 +42,8 @@ function EclipseBar_UpdateShown(self)
 		return
 	end
 
-	if playerClass == "DRUID" and (playerForm == 5 or not playerForm) then
-		if playerSpec == 1 then
-			self:Show()
-		else
-			self:Hide()
-		end
+	if playerClass == "DRUID" and moonkinForm then
+		self:Show()
 	else
 		self:Hide()
 	end
@@ -247,8 +243,7 @@ function EclipseBar_OnEvent(self, event, ...)
 	if event == "UNIT_AURA" then
 		-- upon login...
 		if not firstLoad then
-			playerSpec = GetSpecialization()
-			playerForm = GetShapeshiftForm()
+			moonkinForm = (UnitBuff("player", GetSpellInfo(24858)) ~= nil)
 			EclipseBar_UpdateShown(self)
 			firstLoad = true
 		end
@@ -260,20 +255,21 @@ function EclipseBar_OnEvent(self, event, ...)
 	elseif event == "COMBAT_LOG_EVENT_UNFILTERED" then
 		local _, eventtype, _, _, _, _, target, _, spellID = ...
 		if
-			eventtype == "SPELL_AURA_APPLIED" and target == playerName and
-				(spellID == ECLIPSE_BAR_SOLAR_BUFF_ID or spellID == ECLIPSE_BAR_LUNAR_BUFF_ID)
-		 then
+			eventtype == "SPELL_AURA_APPLIED" and
+			target == playerName and
+			(spellID == ECLIPSE_BAR_SOLAR_BUFF_ID or spellID == ECLIPSE_BAR_LUNAR_BUFF_ID)
+		then
 			local status = (spellID == ECLIPSE_BAR_SOLAR_BUFF_ID) and "sun" or "moon"
 			self.marker:SetTexCoord(unpack(ECLIPSE_MARKER_COORDS[status]))
 		elseif
-			eventtype == "SPELL_AURA_REMOVED" and target == playerName and
-				(spellID == ECLIPSE_BAR_SOLAR_BUFF_ID or spellID == ECLIPSE_BAR_LUNAR_BUFF_ID)
-		 then
+			eventtype == "SPELL_AURA_REMOVED" and
+			target == playerName and
+			(spellID == ECLIPSE_BAR_SOLAR_BUFF_ID or spellID == ECLIPSE_BAR_LUNAR_BUFF_ID)
+		then
 			self.marker:SetTexCoord(unpack(ECLIPSE_MARKER_COORDS["none"]))
 		end
 	else
-		playerSpec = GetSpecialization()
-		playerForm = GetShapeshiftForm()
+		moonkinForm = (UnitBuff("player", GetSpellInfo(24858)) ~= nil)
 		EclipseBar_UpdateShown(self)
 	end
 end
